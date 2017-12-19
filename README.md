@@ -4,15 +4,15 @@
 
 ### Automated approach
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Screenly/api-example-dynamic-content)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/anaglyph/screenly-dynamic-content)
 
 ### Manual approach
 
 #### Clone the repo
 
 ```
-$ git clone git@github.com:Screenly/api-example-dynamic-content.git
-$ cd api-example-dynamic-content
+$ git clone git@github.com:anaglyph/screenly-dynamic-content.git
+$ cd screenly-dynamic-content
 ```
 
 #### Configure and deploy to Heroku
@@ -20,7 +20,8 @@ $ cd api-example-dynamic-content
 ```
 $ heroku create
 $ heroku config:set \
-    PLAYLIST_ID= \
+    RAIN_PLAYLIST_ID= \
+    COLD_PLAYLIST_ID= \
     TOKEN= \
     DARKSKY_API_KEY= \
     LAT= \
@@ -35,12 +36,13 @@ $ git push heroku master
 ```
 $ docker run -d \
     --name=screenly-api-example \
-    -e PLAYLIST_ID= \
+    -e RAIN_PLAYLIST_ID= \
+    -e COLD_PLAYLIST_ID= \
     -e TOKEN= \
     -e DARKSKY_API_KEY= \
     -e LAT= \
     -e LNG= \
     -e TEMP_THRESHOLD= \
     -e ABOVE_OR_BELOW=
-    screenly/api-example-dynamic-content
+    anaglyph/screenly-dynamic-content
 ```
