@@ -25,7 +25,7 @@ ABOVE_OR_BELOW = os.getenv('ABOVE_OR_BELOW')
 RETRY_TIMEOUT = float(os.getenv('RETRY_TIMEOUT', default=5 * 60))
 
 
-def get_temperature():
+def get_weather():
     payload = {'units': 'si'}
     weather_lookup = requests.get(
         'https://api.darksky.net/forecast/{}/{},{}'.format(
@@ -40,7 +40,7 @@ def get_temperature():
         logger.error('Failed to perform weather lookup.')
         return
 
-    return weather_lookup.json()['currently']['temperature']
+    return weather_lookup.json()['currently']['temperature'], weather_lookup.json()['currently']['precipProbability']
 
 
 def control_playlist(requestor, enable=True):
@@ -80,8 +80,9 @@ def main():
     )
 
     while True:
-        temperature = get_temperature()
+        temperature, precipProbability = get_weather()
         logger.info('Got temperature reading: {}'.format(temperature))
+        logger.info('Got precipitation probability reading: {}'.format(precipProbability))
 
         if switch_criteria(temperature):
             if enabled in [False, None]:
