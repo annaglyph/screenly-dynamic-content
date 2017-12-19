@@ -10,7 +10,7 @@ ch = logging.StreamHandler()
 logger.addHandler(ch)
 
 # Screenly config
-PLAYLIST_ID = os.getenv('PLAYLIST_ID')
+COLD_PLAYLIST_ID = os.getenv('COLD_PLAYLIST_ID')
 SCREENLY_TOKEN = os.getenv('TOKEN')
 HOST = 'https://api.screenlyapp.com'
 
@@ -45,7 +45,7 @@ def get_temperature():
 
 def control_playlist(requestor, enable=True):
     requestor.patch(
-        '{}/api/v3/playlists/{}/'.format(HOST, PLAYLIST_ID),
+        '{}/api/v3/playlists/{}/'.format(HOST, COLD_PLAYLIST_ID),
         {"is_enabled": enable}
     )
 
@@ -87,16 +87,16 @@ def main():
             if enabled in [False, None]:
                 control_playlist(session, enable=True)
                 enabled = True
-                logger.info('Enabling playlist')
+                logger.info('Enabling cold playlist')
             else:
-                logger.info('Playlist is already enabled')
+                logger.info('Cold playlist is already enabled')
         else:
             if enabled in [None, True]:
                 control_playlist(session, enable=False)
                 enabled = False
-                logger.info('Disabling playlist')
+                logger.info('Disabling cold playlist')
             else:
-                logger.info('Playlist is already disabled')
+                logger.info('Cold playlist is already disabled')
 
         logger.info('Sleeping for {} seconds'.format(RETRY_TIMEOUT))
         sleep(RETRY_TIMEOUT)
